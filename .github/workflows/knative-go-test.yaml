@@ -46,6 +46,14 @@ jobs:
 
       - name: Check out code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Merge branch against 'main'
+        run: |
+          git remote add upstream https://github.com/knative/serving.git
+          git fetch upstream main
+          git pull --no-commit upstream main || git merge --abort
 
       - name: Check for .codecov.yaml
         id: codecov-enabled
